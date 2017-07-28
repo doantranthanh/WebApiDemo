@@ -35,12 +35,9 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.UnitTests.ControllersTests
                 //Act
                 var response = await controller.GetAll();
 
-                //IEnumerable<Product> products;
-                ////Assert
-                //Assert.IsTrue(response.TryGetContentValue(out products));
-                ////Assert
-                //Assert.AreEqual(5, products.Count());
-
+                IEnumerable<Book> books;
+                //Assert              
+                Assert.IsTrue(response.TryGetContentValue(out books));
                 Assert.AreEqual("OK", response.StatusCode.ToString());
 
             }
