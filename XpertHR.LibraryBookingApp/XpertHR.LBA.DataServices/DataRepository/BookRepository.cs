@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using XpertHR.LBA.DataServices.DataEntities;
 
 namespace XpertHR.LBA.DataServices.DataRepository
@@ -8,7 +9,7 @@ namespace XpertHR.LBA.DataServices.DataRepository
     public sealed class BookRepository : IBookRepository
     {
         private static Lazy<List<Book>> inmemoryBooks = new Lazy<List<Book>>(() => new List<Book>());
-
+        private static object _sync = new object();
         private static List<Book> InmemoryBooks
         {
             get { return inmemoryBooks.Value; }
@@ -22,7 +23,7 @@ namespace XpertHR.LBA.DataServices.DataRepository
 
         public IEnumerable<Book> GetAll()
         {
-            
+
             return InmemoryBooks;
         }
 
@@ -66,6 +67,136 @@ namespace XpertHR.LBA.DataServices.DataRepository
         {
             var itemToDelete = InmemoryBooks.Find(x => x.Id == itemId);
             Delete(itemToDelete);
+        }
+
+        public Task<List<Book>> GetAllAsync()
+        {
+            return Task.Run(() =>
+            {
+                lock (_sync)
+                {
+                    var allBooks = InmemoryBooks;
+                    return allBooks;
+                }
+            });
+        }
+
+        public Task<Book> GetByIdAsync(int id)
+        {
+            return Task.Run(() =>
+            {
+                lock (_sync)
+                {
+                    var bookById = InmemoryBooks.ToList().Find(x => x.Id == id);
+                    return bookById;
+                }
+            });
+        }
+
+        public Task<Book> GetByTitleAsync(string title)
+        {
+            if (title == null)
+                throw new ArgumentNullException(nameof(title));
+            return Task.Run(() =>
+            {
+                lock (_sync)
+                {
+                    var book = InmemoryBooks.ToList().Find(x => x.Title == title);
+                    return book;
+                }
+            });
+        }
+
+        public Task<IEnumerable<Book>> GetAllAvailableBooksAsync()
+        {
+            return Task.Run(() =>
+            {
+                lock (_sync)
+                {
+                    var allBorrowedBooks = InmemoryBooks.Where(x => x.IsBorrowed == false);
+                    return allBorrowedBooks;
+                }
+            });
+        }
+
+        public Task<IEnumerable<Book>> GetAllBorrowedBooksAsync()
+        {
+            return Task.Run(() =>
+            {
+                lock (_sync)
+                {
+                    var allBorrowedBooks = InmemoryBooks.Where(x => x.IsBorrowed);
+                    return allBorrowedBooks;
+                }
+            });
+        }
+
+
+        public Task<bool> AddNewBookAsync(Book item)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+            return Task.Run(() =>
+            {
+                lock (_sync)
+                {
+                    bool result;
+                    try
+                    {
+                        AddNewBook(item);
+                        result = true;
+                    }
+                    catch
+                    {
+                        result = false;
+                    }
+                    return result;
+                }
+            });
+        }
+
+        public Task<bool> DeleteAsync(Book item)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+            return Task.Run(() =>
+            {
+                lock (_sync)
+                {
+                    bool result;
+                    try
+                    {
+                        Delete(item);
+                        result = true;
+                    }
+                    catch
+                    {
+                        result = false;
+                    }
+                    return result;
+                }
+            });
+        }
+
+        public Task<bool> DeleteByIdAsync(int itemId)
+        {
+            return Task.Run(() =>
+            {
+                lock (_sync)
+                {
+                    bool result;
+                    try
+                    {
+                        DeleteById(itemId);
+                        result = true;
+                    }
+                    catch
+                    {
+                        result = false;
+                    }
+                    return result;
+                }
+            });
         }
 
         private void RecreateInmemoryBooks()
