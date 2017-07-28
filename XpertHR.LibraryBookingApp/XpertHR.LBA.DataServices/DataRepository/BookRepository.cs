@@ -23,50 +23,73 @@ namespace XpertHR.LBA.DataServices.DataRepository
 
         public IEnumerable<Book> GetAll()
         {
-
-            return InmemoryBooks;
+            lock (_sync)
+            {
+                return InmemoryBooks;
+            }
         }
 
         public Book GetById(int id)
         {
-            return InmemoryBooks.Find(x => x.Id == id);
+            lock (_sync)
+            {
+                return InmemoryBooks.Find(x => x.Id == id);
+            }
         }
 
         public Book GetByTitle(string title)
         {
-            if (title == null)
-                throw new ArgumentNullException(nameof(title));
-            return InmemoryBooks.Find(x => x.Title == title);
+            lock (_sync)
+            {
+                if (title == null)
+                    throw new ArgumentNullException(nameof(title));
+                return InmemoryBooks.Find(x => x.Title == title);
+            }
         }
 
         public IEnumerable<Book> GetAllAvailableBooks()
         {
-            return InmemoryBooks.Where(x => x.IsBorrowed == false);
+            lock (_sync)
+            {
+                return InmemoryBooks.Where(x => x.IsBorrowed == false);
+            }
         }
 
         public IEnumerable<Book> GetAllBorrowedBooks()
         {
-            return InmemoryBooks.Where(x => x.IsBorrowed == true);
+            lock (_sync)
+            {
+                return InmemoryBooks.Where(x => x.IsBorrowed);
+            }
         }
 
         public void AddNewBook(Book item)
         {
-            if (item == null)
-                throw new ArgumentNullException(nameof(item));
-            InmemoryBooks.Add(item);
+            lock (_sync)
+            {
+                if (item == null)
+                    throw new ArgumentNullException(nameof(item));
+                InmemoryBooks.Add(item);
+            }
         }
 
         public void Delete(Book item)
         {
-            if (item == null)
-                throw new ArgumentNullException(nameof(item));
-            InmemoryBooks.Remove(item);
+            lock (_sync)
+            {
+                if (item == null)
+                    throw new ArgumentNullException(nameof(item));
+                InmemoryBooks.Remove(item);
+            }
         }
 
         public void DeleteById(int itemId)
         {
-            var itemToDelete = InmemoryBooks.Find(x => x.Id == itemId);
-            Delete(itemToDelete);
+            lock (_sync)
+            {
+                var itemToDelete = InmemoryBooks.Find(x => x.Id == itemId);
+                Delete(itemToDelete);
+            }
         }
 
         public Task<List<Book>> GetAllAsync()
@@ -130,7 +153,6 @@ namespace XpertHR.LBA.DataServices.DataRepository
                 }
             });
         }
-
 
         public Task<bool> AddNewBookAsync(Book item)
         {

@@ -198,14 +198,14 @@ namespace XpertHR.LBA.DataServices.Tests.BookDataTests
             //Arrange
             var item = fixture.Create<Book>();
 
-            var oldNumberOfBooks = bookRepository.GetAll();
+            var oldNumberOfBooks = await bookRepository.GetAllAsync();
             var oldTotal = oldNumberOfBooks.Count();
             // Act
             var result = await bookRepository.AddNewBookAsync(item);
             newAddedItems.Add(item);
 
             // Assert
-            var newListBooks = bookRepository.GetAll();
+            var newListBooks = await bookRepository.GetAllAsync();
             var newTotal = newListBooks.Count();
             result.Should().Be(true);
             newTotal.Should().Be(oldTotal + 1);
@@ -216,6 +216,7 @@ namespace XpertHR.LBA.DataServices.Tests.BookDataTests
         {
             //Arrange    
             var oldNumberOfBooks = await bookRepository.GetAllAsync();
+            var oldTotal = oldNumberOfBooks.Count();
             var itemToDelete = await bookRepository.GetByIdAsync(itemId);
             // Act
             var result = await bookRepository.DeleteByIdAsync(itemId);
@@ -223,7 +224,7 @@ namespace XpertHR.LBA.DataServices.Tests.BookDataTests
             // Assert
             result.Should().Be(true);
             var newListBooks = await bookRepository.GetAllAsync();
-            newListBooks.Count().Should().Be(oldNumberOfBooks.ToList().Count - 1);
+            newListBooks.Count().Should().Be(oldTotal - 1);
         }
     }
 }
