@@ -5,11 +5,11 @@ using XpertHR.LBA.DataServices.DataEntities;
 
 namespace XpertHR.LBA.DataServices.DataRepository
 {
-    public sealed class BookRepository
+    public sealed class BookRepository : IBookRepository
     {
         private static Lazy<List<Book>> inmemoryBooks = new Lazy<List<Book>>(() => new List<Book>());
 
-        public static List<Book> InmemoryBooks
+        private static List<Book> InmemoryBooks
         {
             get { return inmemoryBooks.Value; }
         }

@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XpertHR.LBA.DataServices", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XpertHR.LBA.DataServices.Tests", "XpertHR.LBA.DataServices.Tests\XpertHR.LBA.DataServices.Tests.csproj", "{A4BB5C82-583B-4B26-B4B1-3E43BC99C7FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XpertHR.LBA.BookingServicesApi", "XpertHR.LBA.BookingServicesApi\XpertHR.LBA.BookingServicesApi.csproj", "{D9EE9AB3-EA52-4F95-857E-92B821FC35B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XpertHR.LBA.BookingServicesApi.Tests", "XpertHR.LBA.BookingServicesApi.Tests\XpertHR.LBA.BookingServicesApi.Tests.csproj", "{A89A8985-BF72-49B5-9D75-CD5A88A1CD49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{A4BB5C82-583B-4B26-B4B1-3E43BC99C7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4BB5C82-583B-4B26-B4B1-3E43BC99C7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4BB5C82-583B-4B26-B4B1-3E43BC99C7FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9EE9AB3-EA52-4F95-857E-92B821FC35B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9EE9AB3-EA52-4F95-857E-92B821FC35B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9EE9AB3-EA52-4F95-857E-92B821FC35B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9EE9AB3-EA52-4F95-857E-92B821FC35B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A89A8985-BF72-49B5-9D75-CD5A88A1CD49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A89A8985-BF72-49B5-9D75-CD5A88A1CD49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A89A8985-BF72-49B5-9D75-CD5A88A1CD49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A89A8985-BF72-49B5-9D75-CD5A88A1CD49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
