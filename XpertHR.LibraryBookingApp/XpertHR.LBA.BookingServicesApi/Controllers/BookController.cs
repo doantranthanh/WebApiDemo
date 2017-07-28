@@ -18,29 +18,19 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
                 throw new ArgumentNullException(nameof(bookRepository));
             this.bookRepository = bookRepository;
         }
-        //[Route("getall")]
-        //[HttpGet]
-        //public async Task<HttpResponseMessage> GetAll()
-        //{
-        //    //var allBooks = await bookRepository.GetAllAsync();
-        //    //if (allBooks == null)
-        //    //{
-        //    //    return Request.CreateResponse(HttpStatusCode.NotFound);
-        //    //}
-        //    //return Request.CreateResponse(HttpStatusCode.OK, allBooks);
-        //    return Request.CreateResponse(HttpStatusCode.OK)
-        //}
+
+
         [Route("getall")]
         [HttpGet]
-        public  HttpResponseMessage GetAll()
+        public async Task<HttpResponseMessage> GetAll()
         {
-            //var allBooks = await bookRepository.GetAllAsync();
-            //if (allBooks == null)
-            //{
-            //    return Request.CreateResponse(HttpStatusCode.NotFound);
-            //}
-            //return Request.CreateResponse(HttpStatusCode.OK, allBooks);
-            return Request.CreateResponse(HttpStatusCode.OK);
+            var allBooks = await bookRepository.GetAllAsync();
+            if (allBooks == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, allBooks);   
         }
+
     }
 }

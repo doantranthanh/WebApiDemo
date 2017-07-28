@@ -123,6 +123,10 @@
       <Project>{d9ee9ab3-ea52-4f95-857e-92b821fc35b6}</Project>
       <Name>XpertHR.LBA.BookingServicesApi</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XpertHR.LBA.DataServices\XpertHR.LBA.DataServices.csproj">
+      <Project>{92cefa1d-0375-455a-9f28-0203d0725caa}</Project>
+      <Name>XpertHR.LBA.DataServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
