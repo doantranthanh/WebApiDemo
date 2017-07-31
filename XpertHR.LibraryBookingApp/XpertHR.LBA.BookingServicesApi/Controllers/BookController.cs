@@ -50,24 +50,6 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
         {
             var allBooks = await bookRepository.GetByTitleAsync(title);
             return Ok(allBooks);
-        }
-
-        [Route("ItemNotFound/{id}")]
-        [HttpPost]
-        [ItemNotFoundExceptionFilter]
-        public IHttpActionResult ItemNotFound(int id)
-        {
-            var service = new CustomExceptionService();
-            service.ThrowItemNotFoundException();
-            return Ok();
-        }
-    }
-
-    public class CustomExceptionService
-    {
-        public void ThrowItemNotFoundException()
-        {
-            throw new ItemNotFoundException("This is a custom exception.");
-        }
-    }
+        }   
+    } 
 }

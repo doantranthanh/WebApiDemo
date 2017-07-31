@@ -55,48 +55,6 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.UnitTests.ControllersTests
         }
 
         [Test]
-        public async Task BeAbleReturnExceptionGratefully()
-        {
-            // Arrange          
-            var mockExp = new ArgumentNullException("Mock Exception");
-            mockBookRepository.Setup(x => x.GetAllAsync()).ThrowsAsync(mockExp);
-            // Act
-            using (bookController)
-            {
-                bookController.Request = new HttpRequestMessage();
-                bookController.Request.Properties.Add(HttpPropertyKeys.HttpConfigurationKey, new HttpConfiguration());
-                //Act
-                var actionResult = await bookController.GetAllBooks();
-                var getResponse = actionResult.ExecuteAsync(CancellationToken.None).Result;
-
-                //Assert              
-                getResponse.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
-                getResponse.Content.Should().NotBeNull();
-            }
-        }
-
-        //[Test]
-        //public async Task BeAbleToReturnNoContentIfNoBookReturns()
-        //{
-
-        //    // Arrange    
-        //    var mockExp = new ItemNotFoundException("Mock Exception");
-        //    mockBookRepository.Setup(x => x.GetAllAsync()).ThrowsAsync(mockExp);
-        //    // Act
-
-        //    using (bookController)
-        //    {
-        //        bookController.Request = new HttpRequestMessage();
-        //        bookController.Request.Properties.Add(HttpPropertyKeys.HttpConfigurationKey, new HttpConfiguration());
-        //        //Act
-        //        var actionResult = await bookController.GetAllBooks();
-        //        var getResponse = actionResult.ExecuteAsync(CancellationToken.None).Result;
-        //        //Assert                            
-        //        getResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
-        //    }
-        //}
-
-        [Test]
         public async Task BeAbleToReturnAllAvailableBooks()
         {
 
