@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XpertHR.LBA.BookingServices
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XpertHR.LBA.BookingServicesApi.Tests", "XpertHR.LBA.BookingServicesApi.Tests\XpertHR.LBA.BookingServicesApi.Tests.csproj", "{A89A8985-BF72-49B5-9D75-CD5A88A1CD49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XpertHR.LBA.BookingClientApp", "XpertHR.LBA.BookingClientApp\XpertHR.LBA.BookingClientApp.csproj", "{5E864DCC-A1CF-4E0E-A953-6CA0B46A3FE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A89A8985-BF72-49B5-9D75-CD5A88A1CD49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A89A8985-BF72-49B5-9D75-CD5A88A1CD49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A89A8985-BF72-49B5-9D75-CD5A88A1CD49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E864DCC-A1CF-4E0E-A953-6CA0B46A3FE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E864DCC-A1CF-4E0E-A953-6CA0B46A3FE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E864DCC-A1CF-4E0E-A953-6CA0B46A3FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E864DCC-A1CF-4E0E-A953-6CA0B46A3FE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

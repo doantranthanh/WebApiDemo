@@ -14,6 +14,7 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
     {
         private readonly IBookRepository bookRepository;
         private readonly ICustomExceptionService customExceptionServices;
+        static int _count = 1;
 
         public BookController(IBookRepository bookRepository, ICustomExceptionService customExceptionServices)
         {
@@ -69,6 +70,22 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
         {
             await customExceptionServices.ThrowArgumentNullException();
             return Ok();
+        }
+
+        [Route("getnumber")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetNumbers()
+        {
+            await Task.Delay(199); 
+
+            if (_count >= 3) 
+            {
+                int[] numbers = new[] { 1, 2, 3, 4, 5 };
+                _count = 1;
+                return Ok(numbers);
+            }
+            _count++;
+            return InternalServerError(new Exception("Some error"));
         }
     } 
 }
