@@ -15,7 +15,7 @@ namespace XpertHR.LBA.BookingClientApp
     class Program
     {
         static HttpClient client = new HttpClient();
-        static RetryPolicy<HttpResponseMessage> _httpRequestPolicy;
+        static RetryPolicy<HttpResponseMessage> httpRequestPolicy;
 
         static HttpStatusCode[] httpStatusCodesWorthRetrying = {
             HttpStatusCode.NotFound, // 404
@@ -32,7 +32,7 @@ namespace XpertHR.LBA.BookingClientApp
             client.BaseAddress = new Uri("http://localhost:57622/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _httpRequestPolicy = Policy
+            httpRequestPolicy = Policy
                                     .Handle<HttpResponseException>()
                                     .OrResult<HttpResponseMessage>(r => httpStatusCodesWorthRetrying.Contains(r.StatusCode))
                                     .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(retryAttempt));
@@ -73,17 +73,17 @@ namespace XpertHR.LBA.BookingClientApp
 
         static async Task<string> GetNotFoundBookAsync(string requestEndpoint)
         {
-            var response = await _httpRequestPolicy.ExecuteAsync(() => client.GetAsync(requestEndpoint));         
+            var response = await httpRequestPolicy.ExecuteAsync(() => client.GetAsync(requestEndpoint));         
             return response.ReasonPhrase;
         }
 
         static async Task<IEnumerable<int>> GetNumbersTryPolicy(string requestEndpoint)
         {
 
-            HttpResponseMessage httpResponse = await _httpRequestPolicy.ExecuteAsync(() => client.GetAsync(requestEndpoint));
+            var httpResponse = await httpRequestPolicy.ExecuteAsync(() => client.GetAsync(requestEndpoint));
 
-            IEnumerable<int> numbers = await httpResponse.Content.ReadAsAsync<IEnumerable<int>>();
-            return numbers;
+            var numbersTried = await httpResponse.Content.ReadAsAsync<IEnumerable<int>>();
+            return numbersTried;
         }
     }
 }
