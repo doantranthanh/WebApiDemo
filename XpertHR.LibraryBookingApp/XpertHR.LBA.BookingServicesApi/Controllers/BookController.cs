@@ -38,13 +38,10 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
 
         [Route("getallavailable")]
         [HttpGet]
+        [ItemNotFoundExceptionFilter]
         public async Task<IHttpActionResult> GetAllAvailableBooks()
         {
-            var allBooks = await bookRepository.GetAllAvailableBooksAsync();
-            if (!allBooks.ToList().Any())
-            {
-                return StatusCode(HttpStatusCode.NoContent);
-            }
+            var allBooks = await bookRepository.GetAllAvailableBooksAsync();          
             return Ok(allBooks); 
         }
 

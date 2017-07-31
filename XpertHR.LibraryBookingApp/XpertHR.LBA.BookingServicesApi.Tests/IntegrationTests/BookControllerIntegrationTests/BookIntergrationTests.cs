@@ -80,5 +80,25 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.IntegrationTests.BookControllerIn
 
             request.Dispose();
         }
+
+        [Test]
+        public void BeAbleToReturnArgumentNullExceptionThroughGlobalExceptionHandlerWithGetTitle()
+        {
+
+            // Arrange    
+
+            // Act
+
+            var client = new HttpClient(Server);
+            var request = CreateRequest("api/book/getbytitle?title", "application/json", HttpMethod.Get);
+            using (var response = client.SendAsync(request).Result)
+            {
+                response.Content.Should().NotBeNull();
+                response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+                response.ReasonPhrase.Should().Be("ArgumentNullException");
+            }
+
+            request.Dispose();
+        }
     }
 }
