@@ -80,7 +80,7 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
 
             if (_count >= 3) 
             {
-                int[] numbers = new[] { 1, 2, 3, 4, 5 };
+                int[] numbers = { 1, 2, 3, 4, 5 };
                 _count = 1;
                 return Ok(numbers);
             }
