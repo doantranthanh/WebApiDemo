@@ -140,6 +140,8 @@ namespace XpertHR.LBA.DataServices.DataRepository
                 lock (_sync)
                 {
                     var allBorrowedBooks = InmemoryBooks.Where(x => x.IsBorrowed == false);
+                    if (!allBorrowedBooks.ToList().Any())
+                        throw new ItemNotFoundException("This is a custom exception.");
                     return allBorrowedBooks;
                 }
             });

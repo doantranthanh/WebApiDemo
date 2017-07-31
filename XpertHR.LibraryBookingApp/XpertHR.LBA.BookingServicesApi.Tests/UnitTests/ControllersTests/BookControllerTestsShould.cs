@@ -79,27 +79,6 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.UnitTests.ControllersTests
                 contentResult.Content.Should().NotBeNull();
                 contentResult.Content.ToList()[0].Id.Should().Be(1);
             }
-        }
-
-        [Test]
-        public async Task BeAbleToReturnNoContentIfNoAllAvailableBooks()
-        {
-
-            // Arrange
-
-            mockBookRepository.Setup(x => x.GetAllAvailableBooksAsync()).ReturnsAsync(new List<Book>());
-            // Act
-
-            using (bookController)
-            {
-                bookController.Request = new HttpRequestMessage();
-                bookController.Request.Properties.Add(HttpPropertyKeys.HttpConfigurationKey, new HttpConfiguration());
-                //Act
-                var actionResult = await bookController.GetAllAvailableBooks();
-                var getResponse = actionResult.ExecuteAsync(CancellationToken.None).Result;
-                //Assert                            
-                getResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
-            }
-        }
+        }        
     }
 }
