@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Hosting;
 using FluentAssertions;
+using Microsoft.Practices.Unity.WebApi;
 using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
+using XpertHR.LBA.BookingServicesApi.App_Start;
 using XpertHR.LBA.BookingServicesApi.Filters;
 using XpertHR.LBA.DataServices.DataRepository;
 
@@ -43,7 +45,9 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.IntegrationTests
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-                 
+            config.DependencyResolver = new UnityDependencyResolver(UnityConfig.GetConfiguredContainer());
+            config.EnsureInitialized();
+
             Server = new HttpServer(config);
         }
 
