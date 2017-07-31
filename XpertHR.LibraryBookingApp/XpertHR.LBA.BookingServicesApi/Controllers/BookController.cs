@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Results;
 using XpertHR.LBA.DataServices.DataRepository;
 
 namespace XpertHR.LBA.BookingServicesApi.Controllers
@@ -22,15 +24,34 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
 
         [Route("getall")]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetAll()
+        public async Task<IHttpActionResult> GetAllBooks()
         {
-            var allBooks = await bookRepository.GetAllAsync();
-            if (allBooks == null)
+            try
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                var allBooks = await bookRepository.GetAllAsync();
+                if (!allBooks.Any())
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                return Ok(allBooks);
             }
-            return Request.CreateResponse(HttpStatusCode.OK, allBooks);   
+            catch (ArgumentNullException ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
+
+        [Route("getallavailable")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllAvailableBooks()
+        {
+            var allBooks = await bookRepository.GetAllAvailableBooksAsync();
+            if (!allBooks.ToList().Any())
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return Ok(allBooks); 
+        }
     }
 }
