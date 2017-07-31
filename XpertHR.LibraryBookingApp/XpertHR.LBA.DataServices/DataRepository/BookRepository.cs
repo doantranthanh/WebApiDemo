@@ -99,6 +99,8 @@ namespace XpertHR.LBA.DataServices.DataRepository
                 lock (_sync)
                 {
                     var allBooks = InmemoryBooks;
+                    if (!allBooks.Any())
+                        throw new ItemNotFoundException("This is a custom exception.");
                     return allBooks;
                 }
             });
@@ -118,12 +120,12 @@ namespace XpertHR.LBA.DataServices.DataRepository
 
         public Task<Book> GetByTitleAsync(string title)
         {
-            if (title == null)
-                throw new ArgumentNullException(nameof(title));
             return Task.Run(() =>
             {
                 lock (_sync)
                 {
+                    if (title == null)
+                        throw new ArgumentNullException(nameof(title));
                     var book = InmemoryBooks.ToList().Find(x => x.Title == title);
                     return book;
                 }

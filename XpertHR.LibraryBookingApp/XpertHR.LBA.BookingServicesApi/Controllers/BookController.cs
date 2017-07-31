@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
+using XpertHR.LBA.BookingServicesApi.Filters;
 using XpertHR.LBA.DataServices.DataRepository;
 
 namespace XpertHR.LBA.BookingServicesApi.Controllers
@@ -24,21 +23,11 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
 
         [Route("getall")]
         [HttpGet]
+        [ItemNotFoundExceptionFilter]
         public async Task<IHttpActionResult> GetAllBooks()
-        {
-            try
-            {
-                var allBooks = await bookRepository.GetAllAsync();
-                if (!allBooks.Any())
-                {
-                    return StatusCode(HttpStatusCode.NoContent);
-                }
-                return Ok(allBooks);
-            }
-            catch (ArgumentNullException ex)
-            {
-                return InternalServerError(ex);
-            }
+        {          
+            var allBooks = await bookRepository.GetAllAsync();           
+            return Ok(allBooks);         
         }
 
 
@@ -52,6 +41,33 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
                 return StatusCode(HttpStatusCode.NoContent);
             }
             return Ok(allBooks); 
+        }
+
+        [Route("getbytitle")]
+        [HttpGet]
+        [ItemNotFoundExceptionFilter]
+        public async Task<IHttpActionResult> GetByTitle(string title)
+        {
+            var allBooks = await bookRepository.GetByTitleAsync(title);
+            return Ok(allBooks);
+        }
+
+        [Route("ItemNotFound/{id}")]
+        [HttpPost]
+        [ItemNotFoundExceptionFilter]
+        public IHttpActionResult ItemNotFound(int id)
+        {
+            var service = new CustomExceptionService();
+            service.ThrowItemNotFoundException();
+            return Ok();
+        }
+    }
+
+    public class CustomExceptionService
+    {
+        public void ThrowItemNotFoundException()
+        {
+            throw new ItemNotFoundException("This is a custom exception.");
         }
     }
 }

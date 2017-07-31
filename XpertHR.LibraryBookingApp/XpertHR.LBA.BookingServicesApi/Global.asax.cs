@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using XpertHR.LBA.BookingServicesApi.Filters;
 
 namespace XpertHR.LBA.BookingServicesApi
 {
@@ -6,7 +7,8 @@ namespace XpertHR.LBA.BookingServicesApi
     {
         protected void Application_Start()
         {
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configure(FilterApiConfig.RegisterGlobalFilters);
+            GlobalConfiguration.Configure(WebApiConfig.Register);          
         }
     }
 }

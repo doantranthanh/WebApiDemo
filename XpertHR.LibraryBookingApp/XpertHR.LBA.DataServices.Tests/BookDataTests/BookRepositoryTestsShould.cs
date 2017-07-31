@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -85,6 +86,7 @@ namespace XpertHR.LBA.DataServices.Tests.BookDataTests
             result.IsBorrowed.Should().Be(isBorrowed);
         }
 
+ 
         [Test]
         public void BeAbleGetAllAvailableBooks()
         {
@@ -173,6 +175,16 @@ namespace XpertHR.LBA.DataServices.Tests.BookDataTests
             result.Author.Should().Be(author);
             result.Rate.Should().Be(rate);
             result.IsBorrowed.Should().Be(isBorrowed);
+        }
+
+        [Test]
+        public void BeAbleGetBookByNullTitle()
+        {
+            // Act
+            var result = Assert.ThrowsAsync<ArgumentNullException>(() => bookRepository.GetByTitleAsync(null));
+
+            // Assert
+            result.Should().NotBeNull();
         }
 
         [Test]
