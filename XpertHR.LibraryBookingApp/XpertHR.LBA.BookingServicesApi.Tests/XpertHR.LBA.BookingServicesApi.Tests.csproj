@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="IntegrationTests\BookIntergrationTests.cs" />
     <Compile Include="IntegrationTests\WebApiIntegrationTests.cs" />
+    <Compile Include="IntegrationTests\WebApiKeyHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\ControllersTests\BookControllerTestsShould.cs" />
     <Compile Include="UnitTests\WebApiRoutingTests\BookControllerRouteTestsShould.cs" />

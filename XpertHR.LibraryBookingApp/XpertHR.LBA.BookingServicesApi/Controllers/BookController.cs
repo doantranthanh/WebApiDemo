@@ -8,7 +8,7 @@ using XpertHR.LBA.DataServices.DataRepository;
 
 namespace XpertHR.LBA.BookingServicesApi.Controllers
 {
-    [RoutePrefix("api/books")]
+    [RoutePrefix("api/book")]
     public class BookController : ApiController
     {
         private readonly IBookRepository bookRepository;

@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Configuration;
 using XpertHR.LBA.DataServices.DataRepository;
 
 namespace XpertHR.LBA.BookingServicesApi.App_Start

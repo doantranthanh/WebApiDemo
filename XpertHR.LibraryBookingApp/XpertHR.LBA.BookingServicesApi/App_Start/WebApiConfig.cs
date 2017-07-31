@@ -1,4 +1,6 @@
 ﻿using System.Web.Http;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.WebApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -14,6 +16,11 @@ namespace XpertHR.LBA.BookingServicesApi
             var settings = jsonFormatter.SerializerSettings;
             settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            var container = new UnityContainer();
+            config.DependencyResolver = new UnityDependencyResolver(container);
+
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
@@ -21,7 +28,7 @@ namespace XpertHR.LBA.BookingServicesApi
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );
+            );      
         }
     }
 }

@@ -22,7 +22,7 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.UnitTests.WebApiRoutingTests
         [Test]
         public void BeAbleGetAllBookWithCorrectRouteCallAppropirateMethod()
         {
-            const string route = "/api/books/getall";
+            const string route = "/api/book/getall";
             RouteAssert.HasApiRoute(_httpConfiguration, route, HttpMethod.Get);
             _httpConfiguration.ShouldMap(route).To<BookController>(HttpMethod.Get, x => x.GetAllBooks());
         }
@@ -30,7 +30,7 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.UnitTests.WebApiRoutingTests
         [Test]
         public void BeAbleGetAllAvailableBookWithCorrectRouteCallAppropirateMethod()
         {
-            const string route = "/api/books/getallavailable";
+            const string route = "/api/book/getallavailable";
             RouteAssert.HasApiRoute(_httpConfiguration, route, HttpMethod.Get);
             _httpConfiguration.ShouldMap(route).To<BookController>(HttpMethod.Get, x => x.GetAllAvailableBooks());
         }

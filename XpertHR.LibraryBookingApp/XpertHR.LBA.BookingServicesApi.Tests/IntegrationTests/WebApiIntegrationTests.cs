@@ -10,6 +10,8 @@ using System.Web.Http;
 using System.Web.Http.Hosting;
 using FluentAssertions;
 using Moq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 using XpertHR.LBA.BookingServicesApi.Filters;
 using XpertHR.LBA.DataServices.DataRepository;
@@ -20,17 +22,28 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.IntegrationTests
     public class WebApiIntegrationTests : IDisposable
     {
         protected HttpServer Server;
-        private string _url = "http://www.xperthrlibrary.co.uk/";
+        protected string Url = "http://www.xperthrlibrary.co.uk/";
        
 
         [SetUp]
         public void SetUpIntegrationTest()
         {           
             var config = new HttpConfiguration();
-            config.Routes.MapHttpRoute(name: "Default", routeTemplate: "api/{controller}/{action}/{id}", defaults: new { id = RouteParameter.Optional });
+            var formatters = GlobalConfiguration.Configuration.Formatters;
+            var jsonFormatter = formatters.JsonFormatter;
+            var settings = jsonFormatter.SerializerSettings;
+            settings.Formatting = Formatting.Indented;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            // Web API routes        
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+            config.MapHttpAttributeRoutes();
             config.Filters.Add(new ItemNotFoundExceptionFilterAttribute());
-
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+                 
             Server = new HttpServer(config);
         }
 
@@ -38,7 +51,7 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.IntegrationTests
         {
             var request = new HttpRequestMessage();
 
-            request.RequestUri = new Uri(_url + url);
+            request.RequestUri = new Uri(Url + url);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(mthv));
             request.Method = method;
 

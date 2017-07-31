@@ -24,20 +24,20 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.IntegrationTests
 
 
         [Test]
-        public void BeAbleToReturnNoContentIfNoBookReturns()
+        public void BeAbleToReturnAllBooks()
         {
 
             // Arrange    
-            var mockExp = new ItemNotFoundException("Mock Exception");
-            mockBookRepository.Setup(x => x.GetAllAsync()).ThrowsAsync(mockExp);
+           
             // Act
 
             var client = new HttpClient(Server);
-            var request = CreateRequest("api/books/getallbooks", "application/json", HttpMethod.Get);
-            using (HttpResponseMessage response = client.SendAsync(request).Result)
+            var request = CreateRequest("api/book/getall", "application/json", HttpMethod.Get);
+            using (var response = client.SendAsync(request).Result)
             {
                 response.Content.Should().NotBeNull();
                 response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+                response.ReasonPhrase.Should().Be("ItemNotFound");
             }
 
             request.Dispose();
