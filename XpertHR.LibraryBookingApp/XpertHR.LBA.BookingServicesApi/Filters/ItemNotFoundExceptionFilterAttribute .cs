@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Filters;
-using XpertHR.LBA.DataServices.DataRepository;
+using XpertHR.LBA.DataServices.CustomExceptions;
 
 namespace XpertHR.LBA.BookingServicesApi.Filters
 {

@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Practices.Unity;
+using XpertHR.LBA.DataServices.CustomExceptions;
 using XpertHR.LBA.DataServices.DataRepository;
 
 namespace XpertHR.LBA.BookingServicesApi.App_Start
@@ -40,6 +41,7 @@ namespace XpertHR.LBA.BookingServicesApi.App_Start
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IBookRepository, BookRepository>();
+            container.RegisterType<ICustomExceptionService, CustomExceptionService>();
         }
     }
 }

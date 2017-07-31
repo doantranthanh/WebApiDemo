@@ -1,6 +1,6 @@
 using System;
 
-namespace XpertHR.LBA.DataServices.DataRepository
+namespace XpertHR.LBA.DataServices.CustomExceptions
 {
     public class ItemNotFoundException : Exception
     {

@@ -140,7 +140,7 @@
   <ItemGroup>
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
-    <Compile Include="IntegrationTests\BookIntergrationTests.cs" />
+    <Compile Include="IntegrationTests\BookControllerIntegrationTests\BookIntergrationTests.cs" />
     <Compile Include="IntegrationTests\WebApiIntegrationTests.cs" />
     <Compile Include="IntegrationTests\WebApiKeyHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

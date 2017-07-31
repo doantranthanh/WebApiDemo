@@ -13,6 +13,7 @@ using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using XpertHR.LBA.BookingServicesApi.Controllers;
+using XpertHR.LBA.DataServices.CustomExceptions;
 using XpertHR.LBA.DataServices.DataEntities;
 using XpertHR.LBA.DataServices.DataRepository;
 
@@ -22,13 +23,15 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.UnitTests.ControllersTests
     public class BookControllerTestsShould
     {
         private Mock<IBookRepository> mockBookRepository;
+        private Mock<ICustomExceptionService> customExceptionSevice;
         private BookController bookController;
 
         [SetUp]
         public void SetUp()
         {
             mockBookRepository = new Mock<IBookRepository>();
-            bookController = new BookController(mockBookRepository.Object);
+            customExceptionSevice = new Mock<ICustomExceptionService>();
+            bookController = new BookController(mockBookRepository.Object, customExceptionSevice.Object);
         }
 
         [Test]

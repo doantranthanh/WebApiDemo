@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomExceptions\CustomExceptionService.cs" />
+    <Compile Include="CustomExceptions\ICustomExceptionService.cs" />
     <Compile Include="DataEntities\Book.cs" />
     <Compile Include="DataRepository\BookRepository.cs" />
     <Compile Include="DataRepository\IBookRepository.cs" />
-    <Compile Include="DataRepository\ItemNotFoundException.cs" />
+    <Compile Include="CustomExceptions\ItemNotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

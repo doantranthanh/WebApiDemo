@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XpertHR.LBA.DataServices.CustomExceptions;
 using XpertHR.LBA.DataServices.DataEntities;
 
 namespace XpertHR.LBA.DataServices.DataRepository
