@@ -34,7 +34,6 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.IntegrationTests.BookControllerIn
             {
                 response.Content.Should().NotBeNull();
                 response.StatusCode.Should().Be(HttpStatusCode.OK);
-                //response.ReasonPhrase.Should().Be("ItemNotFound");
             }
 
             request.Dispose();
@@ -59,6 +58,27 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.IntegrationTests.BookControllerIn
             }
 
             request.Dispose();
-        }  
+        }
+
+
+        [Test]
+        public void BeAbleToReturnArgumentNullExceptionThroughGlobalExceptionHandler()
+        {
+
+            // Arrange    
+
+            // Act
+
+            var client = new HttpClient(Server);
+            var request = CreateRequest("api/book/getnullexception", "application/json", HttpMethod.Get);
+            using (var response = client.SendAsync(request).Result)
+            {
+                response.Content.Should().NotBeNull();
+                response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+                response.ReasonPhrase.Should().Be("ArgumentNullException");
+            }
+
+            request.Dispose();
+        }
     }
 }

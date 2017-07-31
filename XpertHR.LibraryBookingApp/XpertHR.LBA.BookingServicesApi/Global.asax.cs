@@ -10,6 +10,7 @@ namespace XpertHR.LBA.BookingServicesApi
         {         
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configure(FilterApiConfig.RegisterGlobalFilters);
+            GlobalConfiguration.Configure(WebHandlerConfig.RegisterHandlers);
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(UnityConfig.GetConfiguredContainer());
             GlobalConfiguration.Configuration.EnsureInitialized();
         }

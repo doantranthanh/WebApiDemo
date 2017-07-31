@@ -7,6 +7,7 @@ using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using System.Web.Http.Hosting;
 using FluentAssertions;
 using Microsoft.Practices.Unity.WebApi;
@@ -16,6 +17,7 @@ using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 using XpertHR.LBA.BookingServicesApi.App_Start;
 using XpertHR.LBA.BookingServicesApi.Filters;
+using XpertHR.LBA.BookingServicesApi.Handlers;
 using XpertHR.LBA.DataServices.DataRepository;
 
 namespace XpertHR.LBA.BookingServicesApi.Tests.IntegrationTests
@@ -40,6 +42,7 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.IntegrationTests
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
             config.MapHttpAttributeRoutes();
             config.Filters.Add(new ItemNotFoundExceptionFilterAttribute());
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

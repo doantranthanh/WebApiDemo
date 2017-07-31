@@ -65,5 +65,13 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
             await customExceptionServices.ThrowItemNotFoundException();
             return Ok();
         }
+
+        [Route("getnullexception")]
+        [HttpGet]    
+        public async Task<IHttpActionResult> GetNullException()
+        {
+            await customExceptionServices.ThrowArgumentNullException();
+            return Ok();
+        }
     } 
 }
