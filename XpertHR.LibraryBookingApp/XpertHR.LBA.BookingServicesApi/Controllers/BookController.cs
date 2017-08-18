@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using XpertHR.LBA.BookingServicesApi.Filters;
@@ -86,6 +87,15 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
             }
             _count++;
             return InternalServerError(new Exception("Some error"));
+        }
+
+
+        [Route("getexceptions")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetExceptions()
+        {
+            await Task.Delay(199);           
+            return InternalServerError(new ArgumentNullException("Some error"));
         }
     } 
 }
