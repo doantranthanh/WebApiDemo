@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,16 +16,20 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
     {
         private readonly IBookRepository bookRepository;
         private readonly ICustomExceptionService customExceptionServices;
+        private readonly LogImplementation logImpl;
         static int _count = 1;
 
-        public BookController(IBookRepository bookRepository, ICustomExceptionService customExceptionServices)
+        public BookController(IBookRepository bookRepository, ICustomExceptionService customExceptionServices, LogImplementation logImpl)
         {
             if (bookRepository == null)
                 throw new ArgumentNullException(nameof(bookRepository));
             if (customExceptionServices == null)
                 throw new ArgumentNullException(nameof(customExceptionServices));
+            if (logImpl == null)
+                throw new ArgumentNullException(nameof(logImpl));
             this.bookRepository = bookRepository;
             this.customExceptionServices = customExceptionServices;
+            this.logImpl = logImpl;
         }
 
 
@@ -32,9 +37,10 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
         [HttpGet]
         [ItemNotFoundExceptionFilter]
         public async Task<IHttpActionResult> GetAllBooks()
-        {          
-            var allBooks = await bookRepository.GetAllAsync();           
-            return Ok(allBooks);         
+        {
+            var allBooks = await bookRepository.GetAllAsync();
+            logImpl.LogInfo();
+            return Ok(allBooks);
         }
 
 
@@ -43,8 +49,8 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
         [ItemNotFoundExceptionFilter]
         public async Task<IHttpActionResult> GetAllAvailableBooks()
         {
-            var allBooks = await bookRepository.GetAllAvailableBooksAsync();          
-            return Ok(allBooks); 
+            var allBooks = await bookRepository.GetAllAvailableBooksAsync();
+            return Ok(allBooks);
         }
 
         [Route("getbytitle")]
@@ -66,7 +72,7 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
         }
 
         [Route("getnullexception")]
-        [HttpGet]    
+        [HttpGet]
         public async Task<IHttpActionResult> GetNullException()
         {
             await customExceptionServices.ThrowArgumentNullException();
@@ -77,9 +83,9 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetNumbers()
         {
-            await Task.Delay(199); 
+            await Task.Delay(199);
 
-            if (_count >= 3) 
+            if (_count >= 3)
             {
                 int[] numbers = { 1, 2, 3, 4, 5 };
                 _count = 1;
@@ -94,8 +100,26 @@ namespace XpertHR.LBA.BookingServicesApi.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetExceptions()
         {
-            await Task.Delay(199);           
+            await Task.Delay(199);
             return InternalServerError(new ArgumentNullException("Some error"));
         }
-    } 
+    }
+
+    public class LogImplementation
+    {
+        private readonly IBookRepository repository;
+
+        public LogImplementation(IBookRepository repository)
+        {
+            if (repository == null)
+            {
+                throw new ArgumentNullException(nameof(repository));
+            }
+            this.repository = repository;
+        }
+        public void LogInfo()
+        {
+            Debug.WriteLine("LogInfo");
+        }
+    }
 }

@@ -31,7 +31,7 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.UnitTests.ControllersTests
         {
             mockBookRepository = new Mock<IBookRepository>();
             customExceptionSevice = new Mock<ICustomExceptionService>();
-            bookController = new BookController(mockBookRepository.Object, customExceptionSevice.Object);
+            bookController = new BookController(mockBookRepository.Object, customExceptionSevice.Object, new LogImplementation(mockBookRepository.Object));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.UnitTests.ControllersTests
                 var actionResult = await bookController.GetAllBooks();
                 var getResponse = actionResult.ExecuteAsync(CancellationToken.None).Result;
                 var contentResult = actionResult as OkNegotiatedContentResult<List<Book>>;
-                //Assert     
+                //Assert
                 getResponse.StatusCode.Should().Be(HttpStatusCode.OK);
                 contentResult.Content.Should().NotBeNull();
                 contentResult.Content[0].Id.Should().Be(1);
@@ -74,11 +74,11 @@ namespace XpertHR.LBA.BookingServicesApi.Tests.UnitTests.ControllersTests
                 var actionResult = await bookController.GetAllAvailableBooks();
                 var getResponse = actionResult.ExecuteAsync(CancellationToken.None).Result;
                 var contentResult = actionResult as OkNegotiatedContentResult<IEnumerable<Book>>;
-                //Assert     
+                //Assert
                 getResponse.StatusCode.Should().Be(HttpStatusCode.OK);
                 contentResult.Content.Should().NotBeNull();
                 contentResult.Content.ToList()[0].Id.Should().Be(1);
             }
-        }        
+        }
     }
 }
